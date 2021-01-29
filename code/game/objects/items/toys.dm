@@ -168,8 +168,8 @@
 		var/mob/M = loc
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
-	
-	
+
+
 /obj/item/toy/balloon/arrest
 	name = "arreyst balloon"
 	desc = "A half inflated balloon about a boyband named Arreyst that was popular about ten years ago, famous for making fun of red jumpsuits as unfashionable."
@@ -1482,3 +1482,10 @@
 		cooldown = (world.time + 10)
 		sleep(5)
 		playsound(src, 'sound/effects/blobattack.ogg', 50, FALSE)
+/obj/item/toy/testitem
+	name = "a test toy"
+	desc = "This item is just to test."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "broken_radio"
+/obj/item/toy/testitem/attack_self(mob/user)
+	user.visible_message("<span class ='notice'>LULW</span>")
