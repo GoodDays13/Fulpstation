@@ -168,8 +168,8 @@
 		var/mob/M = loc
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
-
-
+	
+	
 /obj/item/toy/balloon/arrest
 	name = "arreyst balloon"
 	desc = "A half inflated balloon about a boyband named Arreyst that was popular about ten years ago, famous for making fun of red jumpsuits as unfashionable."
@@ -1482,16 +1482,3 @@
 		cooldown = (world.time + 10)
 		sleep(5)
 		playsound(src, 'sound/effects/blobattack.ogg', 50, FALSE)
-/obj/item/toy/ryderperkins
-	name = "Ryder Perkins"
-	desc = "This item is just to test."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "ryder"
-/obj/item/toy/ryderperkins/attack_self(mob/user)
-	var/ckey = usr.ckey
-	var/datum/dna/G = user
-	var/icon = G.vars["icon_render_key"]
-	if(is_species(usr, /datum/species/lizard) && ckey == "gooddays13" && icon == "lizard-coloured-900-male-chest-organic-human-head-organic-human-l_arm-organic-human-r_arm-organic-human-r_leg-organic-human-l_leg-organic-human")
-		user.visible_message("<span class ='notice'>LULW [icon]</span>")
-	else
-		user.visible_message("<span class ='notice'>KEKW! [ckey] [icon]</span>")
