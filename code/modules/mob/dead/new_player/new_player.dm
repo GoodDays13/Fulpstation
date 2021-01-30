@@ -160,7 +160,25 @@
 	if(href_list["manifest"])
 		ViewManifest()
 
+	if(href_list["cancrand"])
+		src << browse(null, "window=randjob") //closes the random job window
+
 	if(href_list["SelectedJob"])
+		if(href_list["SelectedJob"] == "Random")
+			var/list/dept_dat = list()
+			for(var/category in GLOB.position_categories)
+				for(var/job in GLOB.position_categories[category]["jobs"])
+					var/datum/job/jobs = SSjob.name_occupations[job]
+					if(jobs && IsJobUnavailable(jobs.title, TRUE) == JOB_AVAILABLE)
+						dept_dat += jobs.title
+			var/rando = dept_dat[rand(0, dept_dat.len - 1)]
+			var/randomjob = "<p>\[ <a href='byond://?src=[REF(src)];SelectedJob=[rando]'>[rando]</a> | <a href='byond://?src=[REF(src)];SelectedJob=\"Random\"'>\"Reroll\"</a> | <a href='byond://?src=[REF(src)];cancrand=[1]'>\"Cancel\"</a> \]</p>"
+
+			var/datum/browser/popup = new(src, "randjob", "Random Job", 250, 265)
+			popup.set_window_options("can_close=0")
+			popup.set_content(randomjob)
+			popup.open(FALSE)
+
 		if(!SSticker?.IsRoundInProgress())
 			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
@@ -393,6 +411,7 @@
 					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] ([job_datum.current_positions])</span></a>"
 				else
 					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([job_datum.current_positions])</a>"
+		dept_dat += "<a class='job' href='byond://?src=[REF(src)];SelectedJob=Random'>Random</a>"
 		if(!dept_dat.len)
 			dept_dat += "<span class='nopositions'>No positions open.</span>"
 		dat += jointext(dept_dat, "")
@@ -491,6 +510,7 @@
 	src << browse(null, "window=preferences") //closes job selection
 	src << browse(null, "window=mob_occupation")
 	src << browse(null, "window=latechoices") //closes late job selection
+	src << browse(null, "window=randjob") //closes the random job window
 
 // Used to make sure that a player has a valid job preference setup, used to knock players out of eligibility for anything if their prefs don't make sense.
 // A "valid job preference setup" in this situation means at least having one job set to low, or not having "return to lobby" enabled
