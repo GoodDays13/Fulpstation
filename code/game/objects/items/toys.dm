@@ -1482,10 +1482,16 @@
 		cooldown = (world.time + 10)
 		sleep(5)
 		playsound(src, 'sound/effects/blobattack.ogg', 50, FALSE)
-/obj/item/toy/testitem
-	name = "a test toy"
+/obj/item/toy/ryderperkins
+	name = "Ryder Perkins"
 	desc = "This item is just to test."
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "broken_radio"
-/obj/item/toy/testitem/attack_self(mob/user)
-	user.visible_message("<span class ='notice'>LULW</span>")
+	icon_state = "ryder"
+/obj/item/toy/ryderperkins/attack_self(mob/user)
+	var/ckey = usr.ckey
+	var/datum/dna/G = user
+	var/icon = G.vars["icon_render_key"]
+	if(is_species(usr, /datum/species/lizard) && ckey == "gooddays13" && icon == "lizard-coloured-900-male-chest-organic-human-head-organic-human-l_arm-organic-human-r_arm-organic-human-r_leg-organic-human-l_leg-organic-human")
+		user.visible_message("<span class ='notice'>LULW [icon]</span>")
+	else
+		user.visible_message("<span class ='notice'>KEKW! [ckey] [icon]</span>")
